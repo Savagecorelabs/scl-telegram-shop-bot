@@ -24,7 +24,17 @@ app.get('/health', (req, res) => res.json({ ok: true }));
 
 function money(n){ return `$${Number(n).toFixed(2)} AUD`; }
 function makeOrderId(){ return `SCL-${Date.now().toString().slice(-6)}`; }
+bot.start(ctx => ctx.reply('Welcome to Savage Core Labs.', Markup.inlineKeyboard([
+  [Markup.button.webApp('🧪 Open SCL Shop', MINI_APP_URL)]
+])));
 
+bot.command('shop', ctx => ctx.reply('Open shop:', Markup.inlineKeyboard([
+  [Markup.button.webApp('🧪 Open Shop', MINI_APP_URL)]
+])));
+
+bot.command('id', ctx => {
+  ctx.reply(`Chat ID: ${ctx.chat.id}`);
+});
 bot.on('web_app_data', async ctx => {
   try {
     console.log('WEB APP DATA RECEIVED:', ctx.webAppData.data);
@@ -55,3 +65,9 @@ Status: Pending admin confirmation`;
     await ctx.reply('Order failed. Please message admin.');
   }
 });
+bot.telegram.deleteWebhook({ drop_pending_updates: true })
+  .then(() => bot.launch())
+  .then(() => console.log('Telegram bot launched successfully'))
+  .catch(err => console.error('BOT LAUNCH ERROR:', err));
+
+app.listen(PORT, () => console.log(`Running on ${PORT}`));
