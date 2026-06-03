@@ -18,7 +18,7 @@ const products = JSON.parse(
 );
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..', 'miniapp')));
+app.use(express.static(__dirname));
 app.get('/products.json', (req, res) => res.json(products));
 app.get('/health', (req, res) => res.json({ ok: true }));
 
