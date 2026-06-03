@@ -6,7 +6,7 @@ const path = require('path');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID;
-const MINI_APP_URL = process.env.MINI_APP_URL;
+const MINI_APP_URL = 'https://scl-telegram-shop-bot-production.up.railway.app';
 const PORT = process.env.PORT || 3000;
 
 if (!BOT_TOKEN) throw new Error('Missing BOT_TOKEN');
