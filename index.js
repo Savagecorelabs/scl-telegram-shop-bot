@@ -21,7 +21,37 @@ app.use(express.json());
 app.use(express.static(__dirname));
 app.get('/products.json', (req, res) => res.json(products));
 app.get('/health', (req, res) => res.json({ ok: true }));
+app.post('/order', async (req, res) => {
+  try {
+    console.log('HTTP ORDER RECEIVED:', req.body);
 
+    const payload = req.body;
+    const orderId = makeOrderId();
+    const items = payload.items.map(i => `• ${i.name} x${i.qty}`).join('\n');
+
+    const msg = `🧪 NEW SCL ORDER
+
+Order ID: ${orderId}
+
+Name: ${payload.customer.name}
+Telegram: ${payload.customer.telegram || ''}
+Location: ${payload.customer.suburb || ''} ${payload.customer.state || ''}
+
+Items:
+${items}
+
+Total: ${money(payload.total)}
+
+Status: Pending admin confirmation`;
+
+    await bot.telegram.sendMessage(ADMIN_CHAT_ID, msg);
+
+    res.json({ ok: true, orderId });
+  } catch (err) {
+    console.error('HTTP ORDER ERROR:', err);
+    res.status(500).json({ ok: false });
+  }
+});
 function money(n){ return `$${Number(n).toFixed(2)} AUD`; }
 function makeOrderId(){ return `SCL-${Date.now().toString().slice(-6)}`; }
 bot.start(ctx => ctx.reply('Welcome to Savage Core Labs.', Markup.inlineKeyboard([
