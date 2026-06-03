@@ -68,3 +68,4 @@ fetch('/order', {
   }
 })
 .catch(() => alert('Order failed. Message admin.'));
+};
