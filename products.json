@@ -1,0 +1,26 @@
+[
+  {
+    "id": "reta20",
+    "name": "Retatrutide 20mg",
+    "category": "Fat Loss",
+    "price": 225,
+    "image": "https://via.placeholder.com/600x600.png?text=Retatrutide+20mg",
+    "description": "Research-use product. Manual admin confirmation required."
+  },
+  {
+    "id": "tirz20",
+    "name": "Tirzepatide 20mg",
+    "category": "Fat Loss",
+    "price": 220,
+    "image": "https://via.placeholder.com/600x600.png?text=Tirzepatide+20mg",
+    "description": "Research-use product. Manual admin confirmation required."
+  },
+  {
+    "id": "aod10",
+    "name": "AOD-9604 10mg",
+    "category": "Recovery",
+    "price": 130,
+    "image": "https://via.placeholder.com/600x600.png?text=AOD-9604+10mg",
+    "description": "Research-use product. Manual admin confirmation required."
+  }
+]
