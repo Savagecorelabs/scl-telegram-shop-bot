@@ -13,7 +13,9 @@ if (!BOT_TOKEN) throw new Error('Missing BOT_TOKEN');
 
 const bot = new Telegraf(BOT_TOKEN);
 const app = express();
-const products = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'products.json'), 'utf8'));
+const products = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'products.json'), 'utf8')
+);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'miniapp')));
