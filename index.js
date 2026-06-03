@@ -32,7 +32,9 @@ bot.start(ctx => ctx.reply('Welcome to Savage Core Labs.', Markup.inlineKeyboard
 bot.command('shop', ctx => ctx.reply('Open shop:', Markup.inlineKeyboard([
   [Markup.button.webApp('🧪 Open Shop', MINI_APP_URL)]
 ])));
-
+bot.command('id', (ctx) => {
+  ctx.reply(`Chat ID: ${ctx.chat.id}`);
+});
 bot.on('web_app_data', async ctx => {
   const payload = JSON.parse(ctx.webAppData.data);
   const orderId = makeOrderId();
