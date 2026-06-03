@@ -25,24 +25,33 @@ app.get('/health', (req, res) => res.json({ ok: true }));
 function money(n){ return `$${Number(n).toFixed(2)} AUD`; }
 function makeOrderId(){ return `SCL-${Date.now().toString().slice(-6)}`; }
 
-bot.start(ctx => ctx.reply('Welcome to Savage Core Labs.', Markup.inlineKeyboard([
-  [Markup.button.webApp('🧪 Open SCL Shop', MINI_APP_URL)]
-])));
-
-bot.command('shop', ctx => ctx.reply('Open shop:', Markup.inlineKeyboard([
-  [Markup.button.webApp('🧪 Open Shop', MINI_APP_URL)]
-])));
-bot.command('id', (ctx) => {
-  ctx.reply(`Chat ID: ${ctx.chat.id}`);
-});
 bot.on('web_app_data', async ctx => {
-  const payload = JSON.parse(ctx.webAppData.data);
-  const orderId = makeOrderId();
-  const items = payload.items.map(i => `• ${i.name} x${i.qty}`).join('\n');
-  const msg = `🧪 NEW SCL ORDER\n\nOrder ID: ${orderId}\nName: ${payload.customer.name}\nTelegram: ${payload.customer.telegram || ''}\nLocation: ${payload.customer.suburb || ''} ${payload.customer.state || ''}\n\nItems:\n${items}\n\nTotal: ${money(payload.total)}\n\nStatus: Pending admin confirmation`;
-  if (ADMIN_CHAT_ID) await bot.telegram.sendMessage(ADMIN_CHAT_ID, msg);
-  await ctx.reply(`✅ Order request received.\nOrder ID: ${orderId}`);
-});
+  try {
+    console.log('WEB APP DATA RECEIVED:', ctx.webAppData.data);
 
-bot.launch();
-app.listen(PORT, () => console.log(`Running on ${PORT}`));
+    const payload = JSON.parse(ctx.webAppData.data);
+    const orderId = makeOrderId();
+    const items = payload.items.map(i => `• ${i.name} x${i.qty}`).join('\n');
+
+    const msg = `🧪 NEW SCL ORDER
+
+Order ID: ${orderId}
+
+Name: ${payload.customer.name}
+Telegram: ${payload.customer.telegram || ''}
+Location: ${payload.customer.suburb || ''} ${payload.customer.state || ''}
+
+Items:
+${items}
+
+Total: ${money(payload.total)}
+
+Status: Pending admin confirmation`;
+
+    await bot.telegram.sendMessage(ADMIN_CHAT_ID, msg);
+    await ctx.reply(`✅ Order request received.\nOrder ID: ${orderId}`);
+  } catch (err) {
+    console.error('ORDER ERROR:', err);
+    await ctx.reply('Order failed. Please message admin.');
+  }
+});
