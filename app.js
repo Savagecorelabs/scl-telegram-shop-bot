@@ -52,11 +52,19 @@ document.getElementById('cart').onclick = () => {
     total
   };
 
-  alert('Sending order to bot...');
+alert('Sending order to admin...');
 
-  if (tg && tg.sendData) {
-    tg.sendData(JSON.stringify(order));
+fetch('/order', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(order)
+})
+.then(r => r.json())
+.then(data => {
+  if (data.ok) {
+    alert(`Order sent. Order ID: ${data.orderId}`);
   } else {
-    alert('Telegram WebApp not detected. Open from inside Telegram.');
+    alert('Order failed. Message admin.');
   }
-};
+})
+.catch(() => alert('Order failed. Message admin.'));
