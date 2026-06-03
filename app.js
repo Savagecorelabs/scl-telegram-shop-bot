@@ -32,6 +32,8 @@ function addToCart(id, name, price) {
 }
 
 document.getElementById('cart').onclick = () => {
+  alert('Submit clicked');
+
   if (!cart.length) {
     alert('Add a product first');
     return;
@@ -45,15 +47,16 @@ document.getElementById('cart').onclick = () => {
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const order = {
-    customer: {
-      name,
-      telegram,
-      suburb,
-      state
-    },
+    customer: { name, telegram, suburb, state },
     items: cart,
     total
   };
 
-  tg.sendData(JSON.stringify(order));
+  alert('Sending order to bot...');
+
+  if (tg && tg.sendData) {
+    tg.sendData(JSON.stringify(order));
+  } else {
+    alert('Telegram WebApp not detected. Open from inside Telegram.');
+  }
 };
