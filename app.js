@@ -37,14 +37,14 @@ document.getElementById('cart').onclick = () => {
     return;
   }
 
-  const name = prompt('Full name?');
-  const telegram = prompt('Telegram username?');
-  const houseNumber = prompt('House/unit number?');
-  const streetAddress = prompt('Street address?');
-  const suburb = prompt('Suburb?');
-  const state = prompt('State?');
-  const postcode = prompt('Postcode?');
-  const paymentMethod = prompt('Payment method? Type BANK or CRYPTO');
+const name = prompt('Full name?');
+const telegram = prompt('Telegram username?');
+const houseNumber = prompt('House/unit number?');
+const streetAddress = prompt('Street address?');
+const suburb = prompt('Suburb?');
+const state = prompt('State?');
+const postcode = prompt('Postcode?');
+const paymentMethod = prompt('Payment method? BANK or CRYPTO');
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
