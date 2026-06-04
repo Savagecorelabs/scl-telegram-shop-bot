@@ -38,7 +38,8 @@ document.getElementById('cart').onclick = () => {
   }
 
 const name = prompt('Full name?');
-const telegram = prompt('Telegram username?');
+const telegram = prompt('Telegram username?')
+const phone = prompt('Contact number?');
 const houseNumber = prompt('House/unit number?');
 const streetAddress = prompt('Street address?');
 const suburb = prompt('Suburb?');
