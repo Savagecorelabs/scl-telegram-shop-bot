@@ -29,7 +29,7 @@ app.post('/order', async (req, res) => {
     const orderId = makeOrderId();
     const items = payload.items.map(i => `• ${i.name} x${i.qty}`).join('\n');
 
- const msg = `🧪 NEW SCL ORDER
+const msg = `🧪 NEW SCL ORDER
 
 Order ID: ${orderId}
 
