@@ -36,7 +36,7 @@ Order ID: ${orderId}
 Customer:
 Name: ${payload.customer.name || ''}
 Telegram: ${payload.customer.telegram || ''}
-
+Contact Number: ${payload.customer.phone || ''}
 Address:
 ${payload.customer.houseNumber || ''} ${payload.customer.streetAddress || ''}
 ${payload.customer.suburb || ''} ${payload.customer.state || ''} ${payload.customer.postcode || ''}
