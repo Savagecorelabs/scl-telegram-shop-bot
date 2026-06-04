@@ -73,13 +73,20 @@ bot.on('web_app_data', async ctx => {
     const orderId = makeOrderId();
     const items = payload.items.map(i => `• ${i.name} x${i.qty}`).join('\n');
 
-    const msg = `🧪 NEW SCL ORDER
+const msg = `🧪 NEW SCL ORDER
 
 Order ID: ${orderId}
 
-Name: ${payload.customer.name}
+Customer:
+Name: ${payload.customer.name || ''}
 Telegram: ${payload.customer.telegram || ''}
-Location: ${payload.customer.suburb || ''} ${payload.customer.state || ''}
+
+Address:
+${payload.customer.houseNumber || ''} ${payload.customer.streetAddress || ''}
+${payload.customer.suburb || ''} ${payload.customer.state || ''} ${payload.customer.postcode || ''}
+
+Payment Method:
+${payload.customer.paymentMethod || 'Not selected'}
 
 Items:
 ${items}
