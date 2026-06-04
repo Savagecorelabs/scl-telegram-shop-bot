@@ -32,40 +32,52 @@ function addToCart(id, name, price) {
 }
 
 document.getElementById('cart').onclick = () => {
-  alert('Submit clicked');
-
   if (!cart.length) {
     alert('Add a product first');
     return;
   }
 
-  const name = prompt('Name?');
+  const name = prompt('Full name?');
   const telegram = prompt('Telegram username?');
+  const houseNumber = prompt('House/unit number?');
+  const streetAddress = prompt('Street address?');
   const suburb = prompt('Suburb?');
   const state = prompt('State?');
+  const postcode = prompt('Postcode?');
+  const paymentMethod = prompt('Payment method? Type BANK or CRYPTO');
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const order = {
-    customer: { name, telegram, suburb, state },
+    customer: {
+      name,
+      telegram,
+      houseNumber,
+      streetAddress,
+      suburb,
+      state,
+      postcode,
+      paymentMethod
+    },
     items: cart,
     total
   };
 
-alert('Sending order to admin...');
+  alert('Sending order to admin...');
 
-fetch('/order', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(order)
-})
-.then(r => r.json())
-.then(data => {
-  if (data.ok) {
-    alert(`Order sent. Order ID: ${data.orderId}`);
-  } else {
-    alert('Order failed. Message admin.');
-  }
-})
-.catch(() => alert('Order failed. Message admin.'));
+  fetch('/order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(order)
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      alert(`Order sent. Order ID: ${data.orderId}`);
+      cart = [];
+    } else {
+      alert('Order failed. Message admin.');
+    }
+  })
+  .catch(() => alert('Order failed. Message admin.'));
 };
