@@ -50,15 +50,17 @@ const paymentMethod = prompt('Payment method? BANK or CRYPTO');
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const order = {
-    customer: {
-      name,
-      telegram,
-      houseNumber,
-      streetAddress,
-      suburb,
-      state,
-      postcode,
-      paymentMethod
+   customer: {
+  name,
+  telegram,
+  phone,
+  houseNumber,
+  streetAddress,
+  suburb,
+  state,
+  postcode,
+  paymentMethod
+},
     },
     items: cart,
     total
